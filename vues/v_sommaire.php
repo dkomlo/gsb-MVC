@@ -5,7 +5,9 @@
         <h2>
     
 </h2>
-    
+<?php
+if($_SESSION['type']=="visiteur"){
+?>
       </div>  
         <ul id="menuList">
 			<li >
@@ -24,4 +26,28 @@
          </ul>
         
     </div>
-    
+<?php 
+} 
+if($_SESSION['type']=="comptable"){
+?>
+      </div>  
+        <ul id="menuList">
+			<li >
+				  Comptable :<br>
+				<?php echo $_SESSION['prenom']."  ".$_SESSION['nom']  ?>
+			</li>
+           <li class="smenu">
+              <a href="index.php?uc=gererFrais&action=ValiderCreationFrais" title="Saisie fiche de frais ">Valider les fiches de frais</a>
+           </li>
+           <li class="smenu">
+              <a href="index.php?uc=etatFrais&action=selectionnerMois" title="Consultation de mes fiches de frais">Suivi des fiches de frais</a>
+           </li>
+ 	   <li class="smenu">
+              <a href="index.php?uc=connexion&action=deconnexion" title="Se déconnecter">Déconnexion</a>
+           </li>
+         </ul>
+        
+    </div>
+<?php
+}
+?>
