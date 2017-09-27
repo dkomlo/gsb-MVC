@@ -323,7 +323,7 @@ class PdoGsb {
             <?php
             $lgVis = $idJeuVis->fetch();
         }
-        mysql_free_result($idJeuVis);
+        $idJeuVis->closeCursor();
     }
 
 }
