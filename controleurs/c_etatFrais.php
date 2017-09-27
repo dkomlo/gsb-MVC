@@ -30,5 +30,8 @@ switch($action){
 		$dateModif =  dateAnglaisVersFrancais($dateModif);
 		include("vues/v_etatFrais.php");
 	}
+                  case 'validerFicheFrais':{
+                                    include('vues/v_validFrais.php');
+                  }
 }
 ?>

@@ -11,8 +11,8 @@ if($_SESSION['type']=="visiteur"){
       </div>  
         <ul id="menuList">
 			<li >
-				  Visiteur :<br>
-				<?php echo $_SESSION['prenom']."  ".$_SESSION['nom']  ?>
+                                                                          Visiteur :
+                                                                          <b><h3><?php echo $_SESSION['prenom']."  ".$_SESSION['nom']  ?></h3></b><br>
 			</li>
            <li class="smenu">
               <a href="index.php?uc=gererFrais&action=saisirFrais" title="Saisie fiche de frais ">Saisie fiche de frais</a>
@@ -33,11 +33,11 @@ if($_SESSION['type']=="comptable"){
       </div>  
         <ul id="menuList">
 			<li >
-				  Comptable :<br>
-				<?php echo $_SESSION['prenom']."  ".$_SESSION['nom']  ?>
+                                                                          Comptable :
+                                                                          <b><h3><?php echo $_SESSION['prenom']."  ".$_SESSION['nom']  ?></h3></b>
 			</li>
            <li class="smenu">
-              <a href="index.php?uc=gererFrais&action=ValiderCreationFrais" title="Saisie fiche de frais ">Valider les fiches de frais</a>
+              <a href="index.php?uc=etatFrais&action=validerFicheFrais" title="Saisie fiche de frais ">Valider les fiches de frais</a>
            </li>
            <li class="smenu">
               <a href="index.php?uc=etatFrais&action=selectionnerMois" title="Consultation de mes fiches de frais">Suivi des fiches de frais</a>
