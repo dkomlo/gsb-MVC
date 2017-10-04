@@ -29,9 +29,21 @@ switch($action){
 		$dateModif =  $lesInfosFicheFrais['dateModif'];
 		$dateModif =  dateAnglaisVersFrancais($dateModif);
 		include("vues/v_etatFrais.php");
+                                    break;
 	}
                   case 'validerFicheFrais':{
                                     include('vues/v_validFrais.php');
+                                    break;
+                  }
+                  case 'obtenirFicheFrais':{
+                                    $id=$_POST['lstVis'];
+                                    $mois=$_POST['lstMois'];
+                                    $infosFrais=$pdo->getLesInfosFicheFrais($id,$mois);
+                                    $infosForfait=$pdo->getLesFraisForfait($id,$mois);
+                                    $infosHorsForfait=$pdo->getLesFraisHorsForfait($id,$mois);
+                                    include('vues/v_validFrais.php');
+                                    include('vues/v_ficheFrais.php');
+                                    break;
                   }
 }
 ?>

@@ -2,7 +2,7 @@
 <div id="contenu">
       <h2>Validation des fiches de frais</h2>
       <h3>Visiteur et mois à sélectionner </h3>
-      <form action="" method="post">
+      <form action="index.php?uc=etatFrais&action=obtenirFicheFrais" method="post">
       <div class="corpsForm">
           <input type="hidden" name="etape" value="validerConsult" />
        <p>
@@ -10,7 +10,10 @@
         <select id="lstVis" name="lstVis" title="Sélectionnez le visiteur souhaité pour la fiche de frais">
             <?php 
                 $pdo->getVisiteurs(); //Affiche tous les visiteurs
-            ?>
+              if(isset($id)){
+                    $pdo->getCurrentVisiteurs($id);//Affiche le visiteur actuellement selectionne
+                }
+?>
         </select>
       </p>
       <p>
@@ -36,7 +39,10 @@
                 </option>
                 <?php
             }
-            ?>
+                              if(isset($mois)){?>
+                      <option selected="selected" value="<?php echo $mois; ?>"><?php echo obtenirLibelleMois(intval(substr($mois,4,2))) . " " . substr($mois,0,4);?></option>
+               <?php }
+                ?>
         </select>
       </p>
       </div>

@@ -78,7 +78,9 @@ class PdoGsb {
      * @return tous les champs des lignes de frais hors forfait sous la forme d'un tableau associatif 
      */
     public function getLesFraisHorsForfait($idVisiteur, $mois) {
-        $req = "select * from lignefraishorsforfait where lignefraishorsforfait.idvisiteur ='$idVisiteur' 
+        $req = "select lignefraishorsforfait.id as idfrais, lignefraishorsforfait.idVisiteur as idVis, lignefraishorsforfait.mois as mois, 
+                                    lignefraishorsforfait.libelle as libelle, lignefraishorsforfait.date as date, 
+                                    lignefraishorsforfait.montant as montant from lignefraishorsforfait where lignefraishorsforfait.idvisiteur ='$idVisiteur' 
 		and lignefraishorsforfait.mois = '$mois' ";
         $res = PdoGsb::$monPdo->query($req);
         $lesLignes = $res->fetchAll();
@@ -323,6 +325,18 @@ class PdoGsb {
             <?php
             $lgVis = $idJeuVis->fetch();
         }
+        $idJeuVis->closeCursor();
+    }
+    
+        public function getCurrentVisiteurs($id) {
+        // on propose tous les visiteurs
+        $req = "select * from user where type='visiteur' and id='".$id."' ";
+        $idJeuVis = PdoGsb::$monPdo->query($req);
+        $lgVis = $idJeuVis->fetch();
+            $Vis = $lgVis["nom"] . " " . $lgVis["prenom"];
+            ?>    
+            <option selected="selected" value="<?php echo $lgVis["id"]; ?>"><?php echo $Vis ?></option>
+            <?php
         $idJeuVis->closeCursor();
     }
 
