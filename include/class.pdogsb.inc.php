@@ -354,4 +354,5 @@ class PdoGsb {
             return $montant;
         }
 }
+
 ?>
