@@ -5,7 +5,7 @@
         <p>Montant validé :   <?php echo $pdo->getMontant($infosForfait,$infosHorsForfait);
 ?>              
         </p>
-        <form id="" action=""method="POST">
+        <form id="" action="index.php?uc=etatFrais&action=updateligne" method="POST">
         <table class="listeLegere">
             <caption>Quantités des éléments forfaitisés</caption>
             <tr>
@@ -23,17 +23,20 @@
                 <?php
                 // second parcours du tableau des frais forfaitisés du visiteur connecté
                 // pour afficher la ligne des quantités des frais forfaitisés
+                $i=0;
                 foreach ($infosForfait as $unLibelle) {
                     ?>
-                    <td class="qteForfait"> <label for=""></label><input type="number" name="d" 
-                     value="<?php echo $unLibelle["quantite"]; ?>"/></td> 
+                    <td class="qteForfait"> <label for=""></label><input type="number"
+                     name="q<?php echo$i?>" value="<?php echo $unLibelle["quantite"]; ?>"style="width:60%;"/></td> 
 
                     <?php
+                    $i++;
                 }
                 ?>
             </tr>
         </table>
-             <input type="submit" name="valider" value="Valider"/>  <input type="reset" name="effacer" value="Effacer"/>
+            <input type="hidden" name="id" value="<?php echo$id;?>"/>
+             <input type="submit"  value="Valider"/>  <input type="reset" name="effacer" value="Effacer"/>
              
         </form>
         <table class="listeLegere">

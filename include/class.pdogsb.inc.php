@@ -158,6 +158,11 @@ class PdoGsb {
             PdoGsb::$monPdo->exec($req);
         }
     }
+    
+    public function UpdateLigneFraisForfait($q0,$q1,$q2,$q3,$id,$mois){
+        $req="update lignefraisforfait set quantite='".$q0."' where idVisiteur='".$id."' and mois='".$mois."' ";
+        PdoGsb::$monPdo->query($req);
+    }
 
     /**
      * met à jour le nombre de justificatifs de la table ficheFrais
