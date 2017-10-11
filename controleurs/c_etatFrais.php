@@ -45,5 +45,10 @@ switch($action){
                                     include('vues/v_ficheFrais.php');
                                     break;
                   }
+        case 'updateligne':{
+            	include('vues/v_validFrais.php');
+                $pdo->UpdateLigneFraisForfait($_POST["q0"],$_POST["q1"],$_POST["q2"],$_POST["q3"],$_POST["id"],$mois);
+		break;
+        }
 }
 ?>
