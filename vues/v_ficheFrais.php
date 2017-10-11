@@ -26,7 +26,7 @@
                 foreach ($infosForfait as $unLibelle) {
                     ?>
                     <td class="qteForfait"> <label for=""></label><input type="number" name="d" 
-                     value="<?php echo $unLibelle["quantite"]; ?>"/></td> 
+                     value="<?php echo $unLibelle["quantite"]; ?>"style="width:60%;"/></td> 
 
                     <?php
                 }
