@@ -339,6 +339,19 @@ class PdoGsb {
             <?php
         $idJeuVis->closeCursor();
     }
-
+        public function getMontant($forfait,$horsforfait){
+            $montant=0;
+            $resultat=  PdoGsb::$monPdo->query("select montant as montant from fraisforfait");
+            $tab=$resultat->fetchAll();
+            $i=0;
+            foreach($horsforfait as $unmontant){
+                    $montant = $montant + $unmontant["montant"];
+            }
+            foreach($forfait as $quantite){
+                  $montant = $montant + ($quantite["quantite"]*$tab[$i]["montant"]."</br>");
+                  $i++;
+            }
+            return $montant;
+        }
 }
 ?>

@@ -2,7 +2,7 @@
     <em> <?php echo $infosFrais["libEtat"]; ?></em>
     depuis le <em><?php echo $infosFrais["dateModif"]; ?></em></h3>
     <div class="encadre">
-    <p>Montant validé :   <?php echo $infosFrais["montantValide"] ;
+    <p>Montant validé :     <?php echo $pdo->getMontant($infosForfait,$infosHorsForfait);
         ?>              
     </p>
   	<table class="listeLegere">
