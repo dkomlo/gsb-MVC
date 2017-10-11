@@ -54,8 +54,8 @@
                     <td><?php echo $infosHorsForfait[$i]["date"]; ?></td>
                     <td><?php echo $infosHorsForfait[$i]["libelle"]; ?></td>
                     <td><?php echo $infosHorsForfait[$i]["montant"]; ?></td>
-                    <td> du tex aaaaaaaaaaaaaaa</td> 
-                    <td>hhhhhhhhhhhhhhhhh</td>
+                    <td>Supprimer</td> 
+                    <td>Reporter</td>
                 </tr>
                 <?php
                 $i++;
