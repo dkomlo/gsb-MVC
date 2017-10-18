@@ -159,9 +159,17 @@ class PdoGsb {
         }
     }
     
-    public function UpdateLigneFraisForfait($q0,$q1,$q2,$q3,$id,$mois){
-        $req="update lignefraisforfait set quantite='".$q0."' where idVisiteur='".$id."' and mois='".$mois."' ";
+    public function UpdateLigneFraisForfait($tab,$infos){
+        $i=0;
+        //faire un tab qui contient les idfrais et del $infos, transformer le foreach en for
+        foreach($infos as $uneInfos){
+        $req="update lignefraisforfait set quantite='".$tab[$i]."' where idVisiteur='".$tab[4]."' and mois='".$tab[5]
+                ."' and idFraisForfait='".$uneInfos[$i]."'";
+       echo$uneInfos[$i][0];
         PdoGsb::$monPdo->query($req);
+        $i++;
+        }
+
     }
 
     /**

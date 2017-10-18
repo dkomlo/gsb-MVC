@@ -46,8 +46,11 @@ switch($action){
                                     break;
                   }
         case 'updateligne':{
-            	include('vues/v_validFrais.php');
-                $pdo->UpdateLigneFraisForfait($_POST["q0"],$_POST["q1"],$_POST["q2"],$_POST["q3"],$_POST["id"],$mois);
+
+                $infosForfait=$pdo->getLesFraisForfait($_POST["id"],$_POST["mois"]);
+                $tab=array($_POST[0],$_POST[1],$_POST[2],$_POST[3],$_POST["id"],$_POST["mois"]);
+                $pdo->UpdateLigneFraisForfait($tab,$infosForfait);//utiliser majFraisForfait
+                            	include('vues/v_validFrais.php');
 		break;
         }
 }

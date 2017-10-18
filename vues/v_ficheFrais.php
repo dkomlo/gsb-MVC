@@ -27,7 +27,7 @@
                 foreach ($infosForfait as $unLibelle) {
                     ?>
                     <td class="qteForfait"> <label for=""></label><input type="number"
-                     name="q<?php echo$i?>" value="<?php echo $unLibelle["quantite"]; ?>"style="width:60%;"/></td> 
+                     name="<?php echo$i?>" value="<?php echo $unLibelle["quantite"]; ?>"style="width:60%;"/></td> 
 
                     <?php
                     $i++;
@@ -36,6 +36,7 @@
             </tr>
         </table>
             <input type="hidden" name="id" value="<?php echo$id;?>"/>
+            <input type="hidden" name="mois" value="<?php echo$mois;?>"/>
              <input type="submit"  value="Valider"/>  <input type="reset" name="effacer" value="Effacer"/>
              
         </form>
