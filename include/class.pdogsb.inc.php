@@ -164,12 +164,10 @@ class PdoGsb {
         //faire un tab qui contient les idfrais et del $infos, transformer le foreach en for
         foreach($infos as $uneInfos){
         $req="update lignefraisforfait set quantite='".$tab[$i]."' where idVisiteur='".$tab[4]."' and mois='".$tab[5]
-                ."' and idFraisForfait='".$uneInfos[$i]."'";
-       echo$uneInfos[$i][0];
+                ."' and idFraisForfait='".$uneInfos["idfrais"]."'";
         PdoGsb::$monPdo->query($req);
         $i++;
         }
-
     }
 
     /**

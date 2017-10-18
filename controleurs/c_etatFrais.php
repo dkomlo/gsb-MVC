@@ -46,10 +46,12 @@ switch($action){
                                     break;
                   }
         case 'updateligne':{
-
-                $infosForfait=$pdo->getLesFraisForfait($_POST["id"],$_POST["mois"]);
-                $tab=array($_POST[0],$_POST[1],$_POST[2],$_POST[3],$_POST["id"],$_POST["mois"]);
-                $pdo->UpdateLigneFraisForfait($tab,$infosForfait);//utiliser majFraisForfait
+                                    if(isset($_POST["exist"])){
+                                        echo "<p class='MAJ'><i><b>Les Informations ont été mise à jours.</b></i></p>";
+                                    }
+                                    $infosForfait=$pdo->getLesFraisForfait($_POST["id"],$_POST["mois"]);
+                                    $tab=array($_POST[0],$_POST[1],$_POST[2],$_POST[3],$_POST["id"],$_POST["mois"]);
+                                    $pdo->UpdateLigneFraisForfait($tab,$infosForfait);//utiliser majFraisForfait
                             	include('vues/v_validFrais.php');
 		break;
         }

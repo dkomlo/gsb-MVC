@@ -37,6 +37,7 @@
         </table>
             <input type="hidden" name="id" value="<?php echo$id;?>"/>
             <input type="hidden" name="mois" value="<?php echo$mois;?>"/>
+            <input type="hidden" name="exist" value="1"/>
              <input type="submit"  value="Valider"/>  <input type="reset" name="effacer" value="Effacer"/>
              
         </form>
