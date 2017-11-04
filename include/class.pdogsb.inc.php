@@ -372,19 +372,24 @@ class PdoGsb {
         var_dump($mois);
         $m1=substr($mois["mois"],0,4);
         var_dump($m1);
-        $m2=substr($mois["mois"],4);
-        var_dump($m2);
-        if($m2==12){
+        $int=substr($mois["mois"],4);
+        var_dump($int);
+        if($int==12){
             $m1=m1+100;
             $m2=01;
-            var_dump($m1);
-            var_dump($m2);
         }
         else{
-            $m2="0".$m2+1;
-            var_dump($m2);
+            $int=$int+1;
+            if($int<10){
+            $m2= "0".(string)$int;
+            }
+            else {
+                 $m2=(string)$int;
+            }
         }
         $m=$m1.$m2;
+        $mm=$m2;
+                var_dump($mm);
         var_dump($m);
         $req = "update lignefraishorsforfait set mois='$m' where lignefraishorsforfait.id =$idFrais ";
         PdoGsb::$monPdo->exec($req);

@@ -55,7 +55,7 @@
                     $i = 0;
                     while (count($_SESSION['infosHorsForfait']) > $i) {
                         ?>
-                <tr>
+                <tr<?php if($_SESSION['infosHorsForfait'][$i]["Etat"]=="Refusée"){echo ' bgcolor="#FF0000" ';}?>>
                     <td><?php echo $_SESSION['infosHorsForfait'][$i]["date"]; ?></td>
                     <td><?php if($_SESSION['infosHorsForfait'][$i]["Etat"]=="Refusée"){echo "Refusée : ";} echo $_SESSION['infosHorsForfait'][$i]["libelle"]; ?></td>
                     <td><?php echo $_SESSION['infosHorsForfait'][$i]["montant"]; ?></td>
