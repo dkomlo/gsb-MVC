@@ -394,6 +394,32 @@ class PdoGsb {
         $req = "update lignefraishorsforfait set mois='$m' where lignefraishorsforfait.id =$idFrais ";
         PdoGsb::$monPdo->exec($req);
     }
+    public function validerFicheFrais($id,$mois){
+                $req="update fichefrais set idEtat='VA' where idVisiteur='".$id."' and mois='".$mois."'";
+        PdoGsb::$monPdo->query($req);
+    }
+    public function updateMontant($id,$mois,$montantValide){
+                $req="update fichefrais set montantValide='".$montantValide."' where idVisiteur='".$id."' and mois='".$mois."'";
+        PdoGsb::$monPdo->query($req);
+    }
+        public function getFichesValidés() {
+        // on propose tous les visiteurs
+        $req = "select user.id as id, fichefrais.mois as mois, user.nom as nom, user.prenom as prenom from user,fichefrais where user.id=fichefrais.idVisiteur and idEtat='VA'";
+        $idJeuVis = PdoGsb::$monPdo->query($req);
+        $lgVis = $idJeuVis->fetch();
+        while (is_array($lgVis)) {
+            $Vis =$lgVis["mois"] ." ". $lgVis["nom"] . " " . $lgVis["prenom"];
+            ?>    
+            <option value="<?php echo $lgVis["mois"]." ".$lgVis["id"]; ?>"><?php echo $Vis ?></option>
+            <?php
+            $lgVis = $idJeuVis->fetch();
+        }
+        $idJeuVis->closeCursor();
+    }
+        public function remboursementFicheFrais($id,$mois){
+                $req="update fichefrais set idEtat='RB' where idVisiteur='".$id."' and mois='".$mois."'";
+        PdoGsb::$monPdo->query($req);
+    }
 }
 
 ?>

@@ -1,6 +1,3 @@
-<?php
-    if ($infosFrais["idEtat"]=="CL"){
-?>
 <h3>Fiche de frais du mois de : <?php echo obtenirLibelleMois(intval(substr($mois, 4, 2))) . " " . substr($mois, 0, 4); ?>
     <em> <?php echo $infosFrais["libEtat"]; ?></em>
     depuis le <em><?php echo $infosFrais["dateModif"]; ?></em></h3>
@@ -8,7 +5,7 @@
         <p>Montant validé :   <?php echo $montant=$pdo->getMontant($infosForfait,$_SESSION['infosHorsForfait']);
 ?>              
         </p>
-        <form id="" action="index.php?uc=etatFrais&action=updateligne" method="POST">
+        <form id="" action="index.php?uc=etatFrais&action=rembourserFicheFrais" method="POST">
         <table class="listeLegere">
             <caption>Quantités des éléments forfaitisés</caption>
             <tr>
@@ -29,8 +26,7 @@
                 $i=0;
                 foreach ($infosForfait as $unLibelle) {
                     ?>
-                    <td class="qteForfait"> <label for=""></label><input type="number"
-                     name="<?php echo$i?>" value="<?php echo $unLibelle["quantite"]; ?>"style="width:60%;"/></td> 
+                    <td class="qteForfait"> <p><?php echo $unLibelle["quantite"]; ?></p></td> 
 
                     <?php
                     $i++;
@@ -38,12 +34,6 @@
                 ?>
             </tr>
         </table>
-            <input type="hidden" name="id" value="<?php echo$id;?>"/>
-            <input type="hidden" name="mois" value="<?php echo$mois;?>"/>
-            <input type="hidden" name="exist" value="1"/>
-             <input type="submit"  value="Valider"/>  <input type="reset" name="effacer" value="Effacer"/>
-             
-        </form>
         <table class="listeLegere">
             <caption>Descriptif des éléments hors forfait - <?php echo $infosFrais["nbJustificatifs"]; ?> justificatifs reçus -
             </caption>
@@ -51,7 +41,6 @@
                 <th class="date">Date</th>
                 <th class="libelle">Libellé</th>
                 <th class="montant">Montant</th>
-                <th class="montant"colspan="2"> Action</th> 
             </tr>
             <tr>
                 <?php
@@ -62,8 +51,6 @@
                     <td><?php echo $_SESSION['infosHorsForfait'][$i]["date"]; ?></td>
                     <td><?php if($_SESSION['infosHorsForfait'][$i]["Etat"]=="Refusée"){echo "Refusée : ";} echo $_SESSION['infosHorsForfait'][$i]["libelle"]; ?></td>
                     <td><?php echo $_SESSION['infosHorsForfait'][$i]["montant"]; ?></td>
-                    <td><form method="post" action="index.php?uc=gererFrais&action=supprimerFrais"><input type="hidden" value="<?php echo$i?>" name="i"><input type="submit" value="Supprimer"/></form></td> 
-                    <td><form method="post" action="index.php?uc=gererFrais&action=reporterFrais"><input type="hidden" value="<?php echo$i?>" name="i"><input type="submit" value="Reporter"/></form></td>
                 </tr>
                 <?php
                 $i++;
@@ -72,17 +59,9 @@
             </tr>
 
         </table>
-        <form method="post" action="index.php?uc=gererFrais&action=validerFicheFrais">
             <input type="hidden" value="<?php echo$id?>" name="id"/>
              <input type="hidden" value="<?php echo$mois?>" name="mois"/>
-             <input type="hidden" value="<?php echo$montant?>" name="montant"/>
-            <input type="submit" value="Valider la fiche"/>
+            <input type="submit" value="Valider le remboursement"/>
         </form>
     </div>
 </div>
-<?php
-    }
-    else{
-        echo "<p style='background-color:red;font-family:Verdana, Arial, Helvetica, sans-serif;text-align:center;margin-top:-18px;'><i><b>Il n'existe pas de fiche clôturée à se mois.</b></i></p>";
-    }
-    ?>

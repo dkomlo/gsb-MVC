@@ -40,7 +40,7 @@ if($_SESSION['type']=="comptable"){
               <a href="index.php?uc=etatFrais&action=validerFicheFrais" title="Saisie fiche de frais ">Valider les fiches de frais</a>
            </li>
            <li class="smenu">
-              <a href="index.php?uc=etatFrais&action=selectionnerMois" title="Consultation de mes fiches de frais">Suivi des fiches de frais</a>
+              <a href="index.php?uc=etatFrais&action=suiviFicheFrais" title="Consultation de mes fiches de frais">Suivi des fiches de frais</a>
            </li>
  	   <li class="smenu">
               <a href="index.php?uc=connexion&action=deconnexion" title="Se déconnecter">Déconnexion</a>

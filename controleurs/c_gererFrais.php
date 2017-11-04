@@ -46,6 +46,10 @@ switch($action){
 	    $pdo->reporterFraisHorsForfait($idFrais);
 		break;
                 }
+                case "validerFicheFrais":{
+                    $pdo->validerFicheFrais($_POST["id"],$_POST['mois']);
+                    $pdo->updateMontant($_POST["id"],$_POST['mois'],$_POST['montant']);
+                }
 }
 $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur,$mois);
 $lesFraisForfait= $pdo->getLesFraisForfait($idVisiteur,$mois);

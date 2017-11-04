@@ -55,5 +55,25 @@ switch($action){
                             	include('vues/v_validFrais.php');
 		break;
         }
+        case "suiviFicheFrais" : {
+            include("vues/v_listeValide.php");
+            break;
+        }
+                          case 'obtenirFicheFraisValide':{
+                                    $fiche=$_POST['lstVis'];
+                                    $id=substr($fiche,7);
+                                    $mois=substr($fiche,0,7);
+                                    $infosFrais=$pdo->getLesInfosFicheFrais($id,$mois);
+                                    $infosForfait=$pdo->getLesFraisForfait($id,$mois);
+                                    $_SESSION['infosHorsForfait']=$pdo->getLesFraisHorsForfait($id,$mois);
+                                    include('vues/v_listeValide.php');
+                                    include('vues/v_ficheValider.php');
+                                    break;
+                  }
+                  case "rembourserFicheFrais":{
+                      var_dump($_POST['id']);
+                                            var_dump($_POST['mois']);
+                      $pdo->remboursementFicheFrais($_POST["id"],$_POST["mois"]);
+                  }
 }
 ?>
