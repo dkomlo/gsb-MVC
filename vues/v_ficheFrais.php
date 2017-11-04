@@ -2,7 +2,7 @@
     <em> <?php echo $infosFrais["libEtat"]; ?></em>
     depuis le <em><?php echo $infosFrais["dateModif"]; ?></em></h3>
     <div class="encadre">
-        <p>Montant validé :   <?php echo $pdo->getMontant($infosForfait,$infosHorsForfait);
+        <p>Montant validé :   <?php echo $pdo->getMontant($infosForfait,$_SESSION['infosHorsForfait']);
 ?>              
         </p>
         <form id="" action="index.php?uc=etatFrais&action=updateligne" method="POST">
@@ -53,14 +53,14 @@
             <tr>
                 <?php
                     $i = 0;
-                    while (count($infosHorsForfait) > $i) {
+                    while (count($_SESSION['infosHorsForfait']) > $i) {
                         ?>
                 <tr>
-                    <td><?php echo $infosHorsForfait[$i]["date"]; ?></td>
-                    <td><?php echo $infosHorsForfait[$i]["libelle"]; ?></td>
-                    <td><?php echo $infosHorsForfait[$i]["montant"]; ?></td>
-                    <td>Supprimer</td> 
-                    <td>Reporter</td>
+                    <td><?php echo $_SESSION['infosHorsForfait'][$i]["date"]; ?></td>
+                    <td><?php if($_SESSION['infosHorsForfait'][$i]["Etat"]=="Refusée"){echo "Refusée : ";} echo $_SESSION['infosHorsForfait'][$i]["libelle"]; ?></td>
+                    <td><?php echo $_SESSION['infosHorsForfait'][$i]["montant"]; ?></td>
+                    <td><form method="post" action="index.php?uc=gererFrais&action=supprimerFrais"><input type="hidden" value="<?php echo$i?>" name="i"><input type="submit" value="Supprimer"/></form></td> 
+                    <td><form method="post" action="index.php?uc=gererFrais&action=reporterFrais"><input type="hidden" value="<?php echo$i?>" name="i"><input type="submit" value="Reporter"/></form></td>
                 </tr>
                 <?php
                 $i++;

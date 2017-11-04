@@ -80,7 +80,7 @@ class PdoGsb {
     public function getLesFraisHorsForfait($idVisiteur, $mois) {
         $req = "select lignefraishorsforfait.id as idfrais, lignefraishorsforfait.idVisiteur as idVis, lignefraishorsforfait.mois as mois, 
                                     lignefraishorsforfait.libelle as libelle, lignefraishorsforfait.date as date, 
-                                    lignefraishorsforfait.montant as montant from lignefraishorsforfait where lignefraishorsforfait.idvisiteur ='$idVisiteur' 
+                                    lignefraishorsforfait.montant as montant, lignefraishorsforfait.Etat as Etat from lignefraishorsforfait where lignefraishorsforfait.idvisiteur ='$idVisiteur' 
 		and lignefraishorsforfait.mois = '$mois' ";
         $res = PdoGsb::$monPdo->query($req);
         $lesLignes = $res->fetchAll();
@@ -265,7 +265,7 @@ class PdoGsb {
      * @param $idFrais 
      */
     public function supprimerFraisHorsForfait($idFrais) {
-        $req = "delete from lignefraishorsforfait where lignefraishorsforfait.id =$idFrais ";
+        $req = "update lignefraishorsforfait set Etat='Refusée' where lignefraishorsforfait.id =$idFrais ";
         PdoGsb::$monPdo->exec($req);
     }
 
@@ -356,7 +356,9 @@ class PdoGsb {
             $tab=$resultat->fetchAll();
             $i=0;
             foreach($horsforfait as $unmontant){
+                    if($unmontant["Etat"]=="Validée"){
                     $montant = $montant + $unmontant["montant"];
+                    }
             }
             foreach($forfait as $quantite){
                   $montant = $montant + ($quantite["quantite"]*$tab[$i]["montant"]."</br>");
@@ -364,6 +366,29 @@ class PdoGsb {
             }
             return $montant;
         }
+     public function reporterFraisHorsForfait($idFrais) {
+        $resultat=PdoGsb::$monPdo->query("select mois as mois from lignefraishorsforfait where lignefraishorsforfait.id=$idFrais");
+        $mois=$resultat->fetch();
+        var_dump($mois);
+        $m1=substr($mois["mois"],0,4);
+        var_dump($m1);
+        $m2=substr($mois["mois"],4);
+        var_dump($m2);
+        if($m2==12){
+            $m1=m1+100;
+            $m2=01;
+            var_dump($m1);
+            var_dump($m2);
+        }
+        else{
+            $m2="0".$m2+1;
+            var_dump($m2);
+        }
+        $m=$m1.$m2;
+        var_dump($m);
+        $req = "update lignefraishorsforfait set mois='$m' where lignefraishorsforfait.id =$idFrais ";
+        PdoGsb::$monPdo->exec($req);
+    }
 }
 
 ?>

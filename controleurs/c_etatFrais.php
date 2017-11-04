@@ -40,14 +40,14 @@ switch($action){
                                     $mois=$_POST['lstMois'];
                                     $infosFrais=$pdo->getLesInfosFicheFrais($id,$mois);
                                     $infosForfait=$pdo->getLesFraisForfait($id,$mois);
-                                    $infosHorsForfait=$pdo->getLesFraisHorsForfait($id,$mois);
+                                    $_SESSION['infosHorsForfait']=$pdo->getLesFraisHorsForfait($id,$mois);
                                     include('vues/v_validFrais.php');
                                     include('vues/v_ficheFrais.php');
                                     break;
                   }
         case 'updateligne':{
                                     if(isset($_POST["exist"])){
-                                        echo "<p class='MAJ'><i><b>Les Informations ont été mise à jours.</b></i></p>";
+                                        echo "<p style='background-color:#01DF01;font-family:Verdana, Arial, Helvetica, sans-serif;text-align:center;margin-top:-18px;'><i><b>Les informations ont été mise à jour.</b></i></p>";
                                     }
                                     $infosForfait=$pdo->getLesFraisForfait($_POST["id"],$_POST["mois"]);
                                     $tab=array($_POST[0],$_POST[1],$_POST[2],$_POST[3],$_POST["id"],$_POST["mois"]);

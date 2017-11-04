@@ -37,10 +37,15 @@ switch($action){
 		break;
 	}
 	case 'supprimerFrais':{
-		$idFrais = $_REQUEST['idFrais'];
+	    $idFrais = $_SESSION["infosHorsForfait"][$_POST['i']]["idfrais"];
 	    $pdo->supprimerFraisHorsForfait($idFrais);
 		break;
 	}
+                case 'reporterFrais':{
+                    	    $idFrais = $_SESSION["infosHorsForfait"][$_POST['i']]["idfrais"];
+	    $pdo->reporterFraisHorsForfait($idFrais);
+		break;
+                }
 }
 $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur,$mois);
 $lesFraisForfait= $pdo->getLesFraisForfait($idVisiteur,$mois);
