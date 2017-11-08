@@ -39,21 +39,26 @@ switch($action){
 	case 'supprimerFrais':{
 	    $idFrais = $_SESSION["infosHorsForfait"][$_POST['i']]["idfrais"];
 	    $pdo->supprimerFraisHorsForfait($idFrais);
+                      include("vues/v_validFrais.php");
 		break;
 	}
-                case 'reporterFrais':{
-                    	    $idFrais = $_SESSION["infosHorsForfait"][$_POST['i']]["idfrais"];
+                  case 'reporterFrais':{
+                    	$idFrais = $_SESSION["infosHorsForfait"][$_POST['i']]["idfrais"];
 	    $pdo->reporterFraisHorsForfait($idFrais);
 		break;
                 }
-                case "validerFicheFrais":{
-                    $pdo->validerFicheFrais($_POST["id"],$_POST['mois']);
+                  case "validerFicheFrais":{
+                    $etat='VA';
+                    $pdo->majEtatFicheFrais($_POST["id"],$_POST['mois'],$etat,$_POST["nbJust"]);
                     $pdo->updateMontant($_POST["id"],$_POST['mois'],$_POST['montant']);
                 }
 }
 $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur,$mois);
 $lesFraisForfait= $pdo->getLesFraisForfait($idVisiteur,$mois);
+if($action=='supprimerFrais' or $action=='reporterFrais' or $action=='validerFicheFrais'){
+}
+else{
 include("vues/v_listeFraisForfait.php");
 include("vues/v_listeFraisHorsForfait.php");
-
+}
 ?>

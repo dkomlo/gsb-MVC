@@ -41,11 +41,13 @@
             <input type="hidden" name="id" value="<?php echo$id;?>"/>
             <input type="hidden" name="mois" value="<?php echo$mois;?>"/>
             <input type="hidden" name="exist" value="1"/>
+            <input type="hidden" value="<?php echo$montant?>" name="montant"/>
              <input type="submit"  value="Valider"/>  <input type="reset" name="effacer" value="Effacer"/>
              
         </form>
+        <form method="post" action="index.php?uc=gererFrais&action=validerFicheFrais">
         <table class="listeLegere">
-            <caption>Descriptif des éléments hors forfait - <?php echo $infosFrais["nbJustificatifs"]; ?> justificatifs reçus -
+            <caption>Descriptif des éléments hors forfait - </label><input style="width:9%;" type="number" name="nbJust" value="<?php if (isset( $infosFrais["nbJustificatifs"])){echo $infosFrais["nbJustificatifs"];} else{echo"0";} ?>" default="0" min="0"/> justificatifs reçus -
             </caption>
             <tr>
                 <th class="date">Date</th>
@@ -63,7 +65,7 @@
                     <td><?php if($_SESSION['infosHorsForfait'][$i]["Etat"]=="Refusée"){echo "Refusée : ";} echo $_SESSION['infosHorsForfait'][$i]["libelle"]; ?></td>
                     <td><?php echo $_SESSION['infosHorsForfait'][$i]["montant"]; ?></td>
                     <td><form method="post" action="index.php?uc=gererFrais&action=supprimerFrais"><input type="hidden" value="<?php echo$i?>" name="i"><input type="submit" value="Supprimer"/></form></td> 
-                    <td><form method="post" action="index.php?uc=gererFrais&action=reporterFrais"><input type="hidden" value="<?php echo$i?>" name="i"><input type="submit" value="Reporter"/></form></td>
+                    <td><form method="post" action="index.php?uc=gererFrais&action=reporterFrais"><input type="hidden" value="<?php echo$i?>" name="i"><input type="submit" <?php if($_SESSION['infosHorsForfait'][$i]["Etat"]=="Refusée"){echo"disabled='disabled'";}?> value="Reporter"/></form></td>
                 </tr>
                 <?php
                 $i++;
@@ -72,7 +74,6 @@
             </tr>
 
         </table>
-        <form method="post" action="index.php?uc=gererFrais&action=validerFicheFrais">
             <input type="hidden" value="<?php echo$id?>" name="id"/>
              <input type="hidden" value="<?php echo$mois?>" name="mois"/>
              <input type="hidden" value="<?php echo$montant?>" name="montant"/>

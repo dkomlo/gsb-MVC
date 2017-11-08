@@ -318,8 +318,8 @@ class PdoGsb {
      * @param $idVisiteur 
      * @param $mois sous la forme aaaamm
      */
-    public function majEtatFicheFrais($idVisiteur, $mois, $etat) {
-        $req = "update ficheFrais set idEtat = '$etat', dateModif = now() 
+    public function majEtatFicheFrais($idVisiteur, $mois, $etat, $nb) {
+        $req = "update fichefrais set idEtat = '$etat', dateModif = now(),  nbJustificatifs = '$nb'
 		where fichefrais.idvisiteur ='$idVisiteur' and fichefrais.mois = '$mois'";
         PdoGsb::$monPdo->exec($req);
     }
@@ -393,10 +393,6 @@ class PdoGsb {
         var_dump($m);
         $req = "update lignefraishorsforfait set mois='$m' where lignefraishorsforfait.id =$idFrais ";
         PdoGsb::$monPdo->exec($req);
-    }
-    public function validerFicheFrais($id,$mois){
-                $req="update fichefrais set idEtat='VA' where idVisiteur='".$id."' and mois='".$mois."'";
-        PdoGsb::$monPdo->query($req);
     }
     public function updateMontant($id,$mois,$montantValide){
                 $req="update fichefrais set montantValide='".$montantValide."' where idVisiteur='".$id."' and mois='".$mois."'";

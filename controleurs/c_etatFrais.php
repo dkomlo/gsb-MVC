@@ -51,6 +51,7 @@ switch($action){
                                     }
                                     $infosForfait=$pdo->getLesFraisForfait($_POST["id"],$_POST["mois"]);
                                     $tab=array($_POST[0],$_POST[1],$_POST[2],$_POST[3],$_POST["id"],$_POST["mois"]);
+                                    $pdo->updateMontant($_POST["id"],$_POST['mois'],$_POST['montant']);
                                     $pdo->UpdateLigneFraisForfait($tab,$infosForfait);//utiliser majFraisForfait
                             	include('vues/v_validFrais.php');
 		break;
