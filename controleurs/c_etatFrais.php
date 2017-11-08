@@ -72,9 +72,8 @@ switch($action){
                                     break;
                   }
                   case "rembourserFicheFrais":{
-                      var_dump($_POST['id']);
-                                            var_dump($_POST['mois']);
-                      $pdo->remboursementFicheFrais($_POST["id"],$_POST["mois"]);
+                                          $etat='RB';
+                    $pdo->majEtatFicheFrais($_POST["id"],$_POST['mois'],$etat,$nonexistant=FALSE);
                   }
 }
 ?>

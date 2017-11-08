@@ -158,15 +158,15 @@ class PdoGsb {
             PdoGsb::$monPdo->exec($req);
         }
     }
-    
-    public function UpdateLigneFraisForfait($tab,$infos){
-        $i=0;
+
+    public function UpdateLigneFraisForfait($tab, $infos) {
+        $i = 0;
         //faire un tab qui contient les idfrais et del $infos, transformer le foreach en for
-        foreach($infos as $uneInfos){
-        $req="update lignefraisforfait set quantite='".$tab[$i]."' where idVisiteur='".$tab[4]."' and mois='".$tab[5]
-                ."' and idFraisForfait='".$uneInfos["idfrais"]."'";
-        PdoGsb::$monPdo->query($req);
-        $i++;
+        foreach ($infos as $uneInfos) {
+            $req = "update lignefraisforfait set quantite='" . $tab[$i] . "' where idVisiteur='" . $tab[4] . "' and mois='" . $tab[5]
+                    . "' and idFraisForfait='" . $uneInfos["idfrais"] . "'";
+            PdoGsb::$monPdo->query($req);
+            $i++;
         }
     }
 
@@ -319,11 +319,20 @@ class PdoGsb {
      * @param $mois sous la forme aaaamm
      */
     public function majEtatFicheFrais($idVisiteur, $mois, $etat, $nb) {
-        $req = "update fichefrais set idEtat = '$etat', dateModif = now(),  nbJustificatifs = '$nb'
+        if (!$nb) {
+            $req = "update fichefrais set idEtat = '$etat', dateModif = now()
+	        where fichefrais.idvisiteur ='$idVisiteur' and fichefrais.mois = '$mois'";
+        } else {
+            $req = "update fichefrais set idEtat = '$etat', dateModif = now(),  nbJustificatifs = '$nb'
 		where fichefrais.idvisiteur ='$idVisiteur' and fichefrais.mois = '$mois'";
+        }
         PdoGsb::$monPdo->exec($req);
     }
 
+    /**
+     * 
+     * Affiche tout les visiteurs
+     */
     public function getVisiteurs() {
         // on propose tous les visiteurs
         $req = "select * from user where type='visiteur'";
@@ -338,84 +347,99 @@ class PdoGsb {
         }
         $idJeuVis->closeCursor();
     }
-    
-        public function getCurrentVisiteurs($id) {
-        // on propose tous les visiteurs
-        $req = "select * from user where type='visiteur' and id='".$id."' ";
+
+    /**
+     * Permet de proposer le visiteur selectionner par défaut
+     * @param type $id
+     */
+    public function getCurrentVisiteurs($id) {
+        $req = "select * from user where type='visiteur' and id='" . $id . "' ";
         $idJeuVis = PdoGsb::$monPdo->query($req);
         $lgVis = $idJeuVis->fetch();
-            $Vis = $lgVis["nom"] . " " . $lgVis["prenom"];
-            ?>    
-            <option selected="selected" value="<?php echo $lgVis["id"]; ?>"><?php echo $Vis ?></option>
-            <?php
+        $Vis = $lgVis["nom"] . " " . $lgVis["prenom"];
+        ?>    
+        <option selected="selected" value="<?php echo $lgVis["id"]; ?>"><?php echo $Vis ?></option>
+        <?php
         $idJeuVis->closeCursor();
     }
-        public function getMontant($forfait,$horsforfait){
-            $montant=0;
-            $resultat=  PdoGsb::$monPdo->query("select montant as montant from fraisforfait");
-            $tab=$resultat->fetchAll();
-            $i=0;
-            foreach($horsforfait as $unmontant){
-                    if($unmontant["Etat"]=="Validée"){
-                    $montant = $montant + $unmontant["montant"];
-                    }
-            }
-            foreach($forfait as $quantite){
-                  $montant = $montant + ($quantite["quantite"]*$tab[$i]["montant"]."</br>");
-                  $i++;
-            }
-            return $montant;
-        }
-     public function reporterFraisHorsForfait($idFrais) {
-        $resultat=PdoGsb::$monPdo->query("select mois as mois from lignefraishorsforfait where lignefraishorsforfait.id=$idFrais");
-        $mois=$resultat->fetch();
-        var_dump($mois);
-        $m1=substr($mois["mois"],0,4);
-        var_dump($m1);
-        $int=substr($mois["mois"],4);
-        var_dump($int);
-        if($int==12){
-            $m1=m1+100;
-            $m2=01;
-        }
-        else{
-            $int=$int+1;
-            if($int<10){
-            $m2= "0".(string)$int;
-            }
-            else {
-                 $m2=(string)$int;
+
+    /**
+     * Calcul le montant
+     * @param type $forfait
+     * @param type $horsforfait
+     * @return type
+     */
+    public function getMontant($forfait, $horsforfait) {
+        $montant = 0;
+        $resultat = PdoGsb::$monPdo->query("select montant as montant from fraisforfait");
+        $tab = $resultat->fetchAll();
+        $i = 0;
+        foreach ($horsforfait as $unmontant) {
+            if ($unmontant["Etat"] == "Validée") {
+                $montant = $montant + $unmontant["montant"];
             }
         }
-        $m=$m1.$m2;
-        $mm=$m2;
-                var_dump($mm);
-        var_dump($m);
+        foreach ($forfait as $quantite) {
+            $montant = $montant + ($quantite["quantite"] * $tab[$i]["montant"] . "</br>");
+            $i++;
+        }
+        return $montant;
+    }
+
+    /**
+     * Reporte le frais choisi
+     * @param type $idFrais
+     */
+    public function reporterFraisHorsForfait($idFrais) {
+        $resultat = PdoGsb::$monPdo->query("select mois as mois from lignefraishorsforfait where lignefraishorsforfait.id=$idFrais");
+        $mois = $resultat->fetch();
+        $m1 = substr($mois["mois"], 0, 4);
+        $int = substr($mois["mois"], 4);
+        if ($int == 12) {
+            $m1 = m1 + 100;
+            $m2 = 01;
+        } else {
+            $int = $int + 1;
+            if ($int < 10) {
+                $m2 = "0" . (string) $int;
+            } else {
+                $m2 = (string) $int;
+            }
+        }
+        $m = $m1 . $m2;
+        $mm = $m2;
         $req = "update lignefraishorsforfait set mois='$m' where lignefraishorsforfait.id =$idFrais ";
         PdoGsb::$monPdo->exec($req);
     }
-    public function updateMontant($id,$mois,$montantValide){
-                $req="update fichefrais set montantValide='".$montantValide."' where idVisiteur='".$id."' and mois='".$mois."'";
+
+    /**
+     * Update le montant dans la BDD
+     * @param type $id
+     * @param type $mois
+     * @param type $montantValide
+     */
+    public function updateMontant($id, $mois, $montantValide) {
+        $req = "update fichefrais set montantValide='" . $montantValide . "' where idVisiteur='" . $id . "' and mois='" . $mois . "'";
         PdoGsb::$monPdo->query($req);
     }
-        public function getFichesValidés() {
+
+    /**
+     * Propose les fiches validés
+     */
+    public function getFichesValidés() {
         // on propose tous les visiteurs
         $req = "select user.id as id, fichefrais.mois as mois, user.nom as nom, user.prenom as prenom from user,fichefrais where user.id=fichefrais.idVisiteur and idEtat='VA'";
         $idJeuVis = PdoGsb::$monPdo->query($req);
         $lgVis = $idJeuVis->fetch();
         while (is_array($lgVis)) {
-            $Vis =$lgVis["mois"] ." ". $lgVis["nom"] . " " . $lgVis["prenom"];
+            $Vis = $lgVis["mois"] . " " . $lgVis["nom"] . " " . $lgVis["prenom"];
             ?>    
-            <option value="<?php echo $lgVis["mois"]." ".$lgVis["id"]; ?>"><?php echo $Vis ?></option>
+            <option value="<?php echo $lgVis["mois"] . " " . $lgVis["id"]; ?>"><?php echo $Vis ?></option>
             <?php
             $lgVis = $idJeuVis->fetch();
         }
         $idJeuVis->closeCursor();
     }
-        public function remboursementFicheFrais($id,$mois){
-                $req="update fichefrais set idEtat='RB' where idVisiteur='".$id."' and mois='".$mois."'";
-        PdoGsb::$monPdo->query($req);
-    }
-}
 
+}
 ?>
