@@ -28,6 +28,8 @@ if($_SESSION['type']=="visiteur"){
     </div>
 <?php 
 } 
+
+
 if($_SESSION['type']=="comptable"){
 ?>
       </div>  

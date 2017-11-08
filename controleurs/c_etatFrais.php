@@ -45,7 +45,7 @@ switch($action){
                                     include('vues/v_ficheFrais.php');
                                     break;
                   }
-        case 'updateligne':{
+                  case 'updateligne':{
                                     if(isset($_POST["exist"])){
                                         echo "<p style='background-color:#01DF01;font-family:Verdana, Arial, Helvetica, sans-serif;text-align:center;margin-top:-18px;'><i><b>Les informations ont été mise à jour.</b></i></p>";
                                     }
@@ -55,12 +55,12 @@ switch($action){
                                     $pdo->UpdateLigneFraisForfait($tab,$infosForfait);//utiliser majFraisForfait
                             	include('vues/v_validFrais.php');
 		break;
-        }
-        case "suiviFicheFrais" : {
-            include("vues/v_listeValide.php");
-            break;
-        }
-                          case 'obtenirFicheFraisValide':{
+                  }
+                  case "suiviFicheFrais" : {
+                                    include("vues/v_listeValide.php");
+                                    break;
+                  }
+                  case 'obtenirFicheFraisValide':{
                                     $fiche=$_POST['lstVis'];
                                     $id=substr($fiche,7);
                                     $mois=substr($fiche,0,7);
@@ -72,8 +72,8 @@ switch($action){
                                     break;
                   }
                   case "rembourserFicheFrais":{
-                                          $etat='RB';
-                    $pdo->majEtatFicheFrais($_POST["id"],$_POST['mois'],$etat,$nonexistant=FALSE);
+                                    $etat='RB';
+                                    $pdo->majEtatFicheFrais($_POST["id"],$_POST['mois'],$etat,$nonexistant=FALSE);
                   }
 }
 ?>

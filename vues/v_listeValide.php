@@ -9,7 +9,7 @@
         <label for="lstVis">Visiteur : </label>
         <select id="lstVis" name="lstVis" title="Sélectionnez le visiteur souhaité pour la fiche de frais">
             <?php 
-                $pdo->getFichesValidés(); //Affiche tous les visiteurs
+                $pdo->getFichesValidés(); //Affiche toutes les fiches validés
 ?>
         </select>
       </p>

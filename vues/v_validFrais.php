@@ -3,6 +3,7 @@
       <h2>Validation des fiches de frais</h2>
       <h3>Visiteur et mois à sélectionner </h3>
       <form action="index.php?uc=etatFrais&action=obtenirFicheFrais" method="post">
+          
       <div class="corpsForm">
           <input type="hidden" name="etape" value="validerConsult" />
        <p>
@@ -13,14 +14,14 @@
               if(isset($id)){
                     $pdo->getCurrentVisiteurs($id);//Affiche le visiteur actuellement selectionne
                 }
-?>
+            ?>
         </select>
       </p>
+      
       <p>
         <label for="lstMois">Mois : </label>
         <select id="lstMois" name="lstMois" title="Sélectionnez le mois souhaité pour la fiche de frais">
             <?php
-
                 // Affiche les 6 derniers mois
                 $m = array('','Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre');
             for($i = 1;$i<7;$i++){
@@ -37,12 +38,12 @@
             echo $m[$d].'  '.$decoupe[1];
             ?>
                 </option>
-                <?php
+            <?php
             }
-                              if(isset($mois)){?>
+             if(isset($mois)){?>
                       <option selected="selected" value="<?php echo $mois; ?>"><?php echo obtenirLibelleMois(intval(substr($mois,4,2))) . " " . substr($mois,0,4);?></option>
-               <?php }
-                ?>
+  <?php }
+  ?>
         </select>
       </p>
       </div>
